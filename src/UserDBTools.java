@@ -30,7 +30,7 @@ public class UserDBTools {
         }
     }
     public static void createUser(String username, String pwd, String secQ, String secA) {
-        try (Connection ccu = DriverManager.getConnection(jdbcUrl); Statement scu = c.createStatement()) {
+        try (Connection ccu = DriverManager.getConnection(jdbcUrl); Statement scu = ccu.createStatement()) {
             scu.executeUpdate("INSERT INTO users (username, password, secQ, secA) VALUES ('" + username + "', '" + pwd + "', '" + secQ + "', '" + secA + "');");
 
         } catch (SQLException ecu) {
