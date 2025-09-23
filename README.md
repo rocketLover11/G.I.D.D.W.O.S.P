@@ -3,3 +3,5 @@ My attempt at making a mini-os
 currently making the user data system
 
 hi
+
+idk what the heck im doing on github lol
