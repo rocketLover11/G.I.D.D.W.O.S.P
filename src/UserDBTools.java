@@ -84,7 +84,7 @@ public class UserDBTools {
         } while (!loginCorrect(username, password));
     }
 
-    public static resetPassword(String username, String newPassword, String secA) {
+    public static void resetPassword(String username, String newPassword, String secA) {
         Connection crp = null;
         Statement srp = null;
         ResultSet rrp = null;
