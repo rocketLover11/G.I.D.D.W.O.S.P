@@ -7,6 +7,10 @@ public class UserDBTools {
 
     public static void main(String[] args) {System.out.println("UserDBTools is not meant to be run.");}
 
+    public static String jdbc() {
+        return jdbcUrl;
+    }
+
     public static void createTable() {
         Connection cct = null;
         Statement sct = null;
