@@ -5,6 +5,8 @@ public class UserDBTools {
     static String jdbcUrl = "jdbc:sqlite:db\\userDB.db";
     static Scanner sc = new Scanner(System.in);
 
+    public static void main(String[] args) {System.out.println("UserDBTools is not meant to be run.");}
+
     public static void createTable() {
         Connection cct = null;
         Statement sct = null;
@@ -30,7 +32,11 @@ public class UserDBTools {
         }
     }
     public static void createUser(String username, String pwd, String secQ, String secA) {
-        try (Connection ccu = DriverManager.getConnection(jdbcUrl); Statement scu = ccu.createStatement()) {
+        Connection ccu = null;
+        Statement scu = null;
+        try {
+            ccu = DriverManager.getConnection(jdbcUrl);
+            scu = ccu.createStatement();
             scu.executeUpdate("INSERT INTO users (username, password, secQ, secA) VALUES ('" + username + "', '" + pwd + "', '" + secQ + "', '" + secA + "');");
 
         } catch (SQLException ecu) {
@@ -76,11 +82,12 @@ public class UserDBTools {
     }
 
     public static void login() {
+        String username, password;
         do {
             System.out.print("Enter Username: >> ");
-            String username = sc.nextLine();
+            username = sc.nextLine();
             System.out.print("\nEnter Password: >> ");
-            String password = sc.nextLine();
+            password = sc.nextLine();
         } while (!loginCorrect(username, password));
     }
 
@@ -94,13 +101,17 @@ public class UserDBTools {
             srp = crp.createStatement();
             rrp = srp.executeQuery("SELECT secQ, secA FROM users WHERE username = '" + username + "';");
 
+            String secQ, correctSecA;
             if (rrp.next()) {
-                String secQ = rrp.getString("secQ");
-                String correctSecA = rrp.getString("secA");
+                secQ = rrp.getString("secQ");
+                correctSecA = rrp.getString("secA");
             } else {
                 System.out.println("Username not found.");
                 return;
             }
+
+            System.out.println(secQ + ": >> ");
+            sc.nextLine();
 
             if (secA.equals(correctSecA)) {
                 srp.executeUpdate("UPDATE users SET password = '" + newPassword + "' WHERE username = '" + username + "';");
