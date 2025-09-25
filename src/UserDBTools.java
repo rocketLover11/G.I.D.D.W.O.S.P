@@ -95,7 +95,7 @@ public class UserDBTools {
         } while (!loginCorrect(username, password));
     }
 
-    public static void resetPassword(String username, String newPassword, String secA) {
+    public static void resetPassword(String username) {
         Connection crp = null;
         Statement srp = null;
         ResultSet rrp = null;
@@ -115,7 +115,10 @@ public class UserDBTools {
             }
 
             System.out.println(secQ + ": >> ");
-            sc.nextLine();
+            String secA = sc.nextLine();
+
+            System.out.print("Enter New Password: >> ");
+            String newPassword = sc.nextLine();
 
             if (secA.equals(correctSecA)) {
                 srp.executeUpdate("UPDATE users SET password = '" + newPassword + "' WHERE username = '" + username + "';");
@@ -136,11 +139,17 @@ public class UserDBTools {
         }
     }
 
-    public static void deleteUser(String username, String inputPassword) {
+    public static void deleteUser(String username) {
         Connection cdu = null;
         Statement sdu = null;
 
-        login();
+        System.out.print("Enter Password to Confirm Deletion: >> ");
+        String password = sc.nextLine();
+
+        if (!loginCorrect(username, password)) {
+            System.out.println("Incorrect password. User deletion aborted.");
+            return;
+        }
 
         try {
             cdu = DriverManager.getConnection(jdbcUrl);
