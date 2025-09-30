@@ -23,7 +23,7 @@ public class GiddwospCMD {
             } else {
                 new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
-        } catch (IOException || InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println("Error clearing the screen: " + e.getMessage());
         }
     }
@@ -65,12 +65,18 @@ public class GiddwospCMD {
 
     }
 
-    public static void cmd() {
-        cls();
-        System.out.println("Welcome to the G.I.D.D.W.O.S.P Command Interface!\n");
-        
+    public static void login() {
         String password;
+        Boolean incorrectLogin = null;
+
         do {
+            cls();
+            System.out.println("Welcome to the G.I.D.D.W.O.S.P Command Interface!\n");
+            
+            if (incorrectLogin.equals(true)) {
+                System.out.println("Incorrect Username or Password.");
+            }
+
             System.out.println("Login:");
 
             System.out.print("Enter Username or Type 'CreateUser': >> ");
@@ -93,8 +99,14 @@ public class GiddwospCMD {
 
             System.out.print("\nEnter Password: >> ");
             password = sc.nextLine();
-        } while (!UserDBTools.loginCorrect(username, password));
 
+            if (!UserDBTools.loginCorrect(username, password)) {
+                incorrectLogin = true;
+            }
+        } while (incorrectLogin);
+    }
+
+    public static void cmd() {
         cls();
         System.out.println("Hello, " + username + "!\n");        
         
