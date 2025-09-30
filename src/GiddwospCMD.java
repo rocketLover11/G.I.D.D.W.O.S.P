@@ -19,11 +19,11 @@ public class GiddwospCMD {
     public static void cls() {
         try {
             if (os.contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start();
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
-                new ProcessBuilder("clear").inheritIO().start();
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
-        } catch (IOException e) {
+        } catch (IOException || InterruptedException e) {
             System.out.println("Error clearing the screen: " + e.getMessage());
         }
     }
